@@ -1,12 +1,16 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+
+import "../styles/Form.css";
 
 function Form({ route, method }) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const name = method === "login" ? "Login" : "Register";
@@ -50,10 +54,15 @@ function Form({ route, method }) {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button type="submit" disabled={loading} className="form-button">
-        {loading ? "Loading..." : { name }}
+        {loading ? "Loading..." : name}
       </button>
     </form>
   );
 }
+
+Form.propTypes = {
+  route: PropTypes.string.isRequired,
+  method: PropTypes.oneOf(["login", "register"]).isRequired,
+};
 
 export default Form;
